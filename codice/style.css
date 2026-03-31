@@ -1,0 +1,57 @@
+* {
+    color: rgb(0, 118, 185);
+    font-family: sans-serif;
+}
+
+table {
+    border: solid 1.5pt blue;
+    background-color: rgb(219, 234, 247);
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30pt;
+}
+
+td {
+    width: 230pt;
+}
+
+#riga1 {
+    height:80pt;
+    font-size: 30pt;
+}
+
+#riga2 {
+    height:270pt;
+}
+
+textarea {
+    width: 230pt;
+    height: 230pt;
+    border: solid 1.5pt blue;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: #1868d1;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.info {
+    font-size: 12pt;
+}
+
+select {
+    width:50%
+}
+
+input[type="date"] {
+    font-size: 13px;
+  }
