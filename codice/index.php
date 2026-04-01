@@ -16,17 +16,17 @@ function get_session($key, $default = "") {
     <head>
         <meta charset="UTF-8">
         <title>Generatore Prospetti di Laurea</title>
-        <link rel="stylesheet" href="<?php get_stylesheet_directory_uri(); ?>/style.css">
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/style.css">
     </head>
 
-    <body <?php get_session('sfondo') ?>>
+    <body <?php echo get_session('sfondo') ?>>
 
         <form method="post" action="index.php">
             
-            <table <?php get_session('test') ?>>
+            <table <?php echo get_session('test') ?>>
                 <tr id="riga1">
                     <td colspan="3">
-                        <b>Generatore Prospetti di Laurea <?php get_session('test') ?></b>
+                        <b>Generatore Prospetti di Laurea <?php echo get_session('test') ?></b>
                     </td>
                 </tr>
                 <tr id="riga2">
@@ -42,7 +42,7 @@ function get_session($key, $default = "") {
                                 "M. Ing. Robotica e della Automazione", "M. Ing. delle Telecomunicazioni"
                             ];
                             foreach ($corsi as $corso): ?>
-                                <option value="<?php $corso ?>"><?php $corso ?></option>
+                                <option value="<?php echo $corso ?>"><?php echo $corso ?></option>
                             <?php endforeach ?>
                         </select>
                         <br><br><br>
@@ -60,19 +60,17 @@ function get_session($key, $default = "") {
                         <br><br>
                         
                         <?php if (get_session('link')): ?>
-                            <a href="<?php get_session('link') ?>" target="blank">
-                                <p style="text-align: center; border: 1px solid #ccc; padding: 5px; background: #eee;">
-                                    📄 Visualizza Prospetti
-                                </p>
+                            <a href="<?php echo get_session('link') ?>" target="blank">
+                                <p>Visualizza Prospetti</p>
                             </a>
                         <?php endif; ?>
                         
                         <br>
-                        <button type="submit" name="invia" <?php get_session('disabilitato') ?> style="width: 100%;">
+                        <button type="submit" name="invia" <?php echo get_session('disabilitato') ?>>
                             Invia Prospetti
                         </button>
 
-                        <p class="messaggio-stato"><?php get_session('stato') ?></p>
+                        <p class="messaggio-stato" style="color: red;"><?php echo get_session('stato') ?></p>
                     </td>
                 </tr>
             </table>
@@ -80,9 +78,9 @@ function get_session($key, $default = "") {
             <table style="margin-top: 20px; border: none; background-color: transparent;">
                 <tr>
                     <td>
-                        <?php get_session('testTitolo') ?>
+                        <?php echo get_session('testTitolo') ?>
                         <div class="messaggio-errore">
-                            <?php get_session('statoErrori') ?>
+                            <?php echo get_session('statoErrori') ?>
                         </div>
                     </td>
                 </tr>

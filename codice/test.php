@@ -22,7 +22,7 @@ class Test
         $this->test_valori();
     }
 
-    //verifica che alcuni campi della classe CarrieraLaureando siano inizializzati correttamente
+    // verifica che alcuni campi della classe CarrieraLaureando siano inizializzati correttamente
     private function test_anagrafica(): void
     {
         if (
@@ -129,7 +129,7 @@ class Test
         return $ret;
     }
 
-    //verifica che il bonus dei laureandi in ingegneria informatica sia settato correttamente
+    // verifica che il bonus dei laureandi in ingegneria informatica sia settato correttamente
     private function test_bonus(): void
     {
         if (
@@ -236,7 +236,7 @@ class Test
         return $ret;
     }
 
-    //controlla che alcuni campi inerenti alla carriera dello studente siano corretti
+    // controlla che alcuni campi inerenti alla carriera dello studente siano corretti
     private function test_valori(): void
     {
         if (
