@@ -1,5 +1,7 @@
 <?php
-
+/*
+Utilizza la libreria esterna PHPMailer per autenticarsi su un server SMTP e inviare in loop le email a tutti gli studenti con in allegato il relativo PDF.
+*/
 use PHPMailer\PHPMailer\PHPMailer;
 
 require __DIR__."/../lib/PHPMailer/src/PHPMailer.php";
@@ -11,7 +13,7 @@ class GestoreEmail
 {
     public function __construct(string $cdl)
     {
-        //i dati anagrafici e gli indirizzi mail vengono prelevati dall'array di sessione
+        // i dati anagrafici e gli indirizzi mail vengono prelevati dall'array di sessione
         $carriere = $_SESSION['carriere'];
         $totali = count($carriere);
         $inviate = 0;
@@ -38,10 +40,11 @@ class GestoreEmail
                 $_SESSION["statoErrori"] .= "Errore nell'invio dei prospetti!<br>";
                 break;
             } else {
-                //il numero di mail inviate viene aggiornato
+                // il numero di mail inviate viene aggiornato
                 $inviate++;
                 $_SESSION["stato"] = "Prospetti inviati: ".$inviate."/".$totali;
             }
+            sleep(13);
         }
 
         // Chiude la connessione SMTP

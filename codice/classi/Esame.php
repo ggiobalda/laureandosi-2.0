@@ -1,5 +1,7 @@
 <?php
-
+/*
+Rappresenta il singolo esame sostenuto. Memorizza nome, voto, CFU e data. Si occupa di convertire il "30 e lode" in un valore numerico (es. 31 o 33) recuperando la regola dai file di configurazione. Determina anche i flag booleani $media (se fa media) e $inf (se è un esame di informatica)
+*/
 require_once 'FileConfigurazione.php';
 
 class Esame

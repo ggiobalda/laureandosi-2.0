@@ -1,4 +1,10 @@
 <?php
+/*
+Estende CarrieraLaureando per implementare la logica specifica per Ingegneria Informatica.
+Calcola se lo studente ha diritto al bonus confrontando la data di laurea con la data di iscrizione.
+Se ha il bonus, invoca togliVotoPiuBasso() che cerca l'esame peggiore (tenendo conto anche del peso in CFU per massimizzare il vantaggio) e lo esclude dalla media.
+Infine calcola la mediaInformatica filtrando solo gli esami taggati come "INF"
+*/
 
 require_once 'CarrieraLaureando.php';
 
@@ -19,7 +25,7 @@ class CarrieraLaureandoInf extends CarrieraLaureando
         if ($this->bonus) {
             $this->togliVotoPiuBasso();
         }
-        //ora che è stato eventualmente rimosso l'esame dal voto più basso è possibile calcolare le medie pesate
+        // ora che è stato eventualmente rimosso l'esame dal voto più basso è possibile calcolare le medie pesate
         $result = $this->calcolaMedia();
         $this->cfuMedia = $result['cfu'];
         $this->mediaPesata = $result['media'];

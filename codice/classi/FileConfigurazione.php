@@ -1,5 +1,7 @@
 <?php
-
+/*
+Classe con metodi statici che funge da Configuration Manager. Legge i file JSON presenti nella cartella /config/ per disaccoppiare la logica dal codice
+*/
 class FileConfigurazione
 {
     private static $cdlData = null;

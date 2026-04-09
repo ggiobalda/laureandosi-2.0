@@ -1,4 +1,7 @@
 <?php
+/*
+Funge da modulo di integrazione per comunicare con il database d'ateneo. Contiene i metodi statici prelevaAnagrafica() e prelevaCarriera() che leggono i dati dello studente (in questo progetto dal file JSON salvato localmente invece che dal db.
+*/
 
 class GestioneCarrieraStudente
 {

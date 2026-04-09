@@ -1,4 +1,7 @@
 <?php
+/*
+Classe fondamentale che astrae la carriera di uno studente. Nel costruttore preleva anagrafica ed esami, itera sugli esami scartando quelli sovrannumerari o filtrati e infine istanzia oggetti di tipo Esame, ordinandoli per data. Calcola inoltre la media pesata e i CFU totali validi per la media tramite il metodo calcolaMedia().
+*/
 
 require_once 'GestioneCarrieraStudente.php';
 require_once 'FileConfigurazione.php';

@@ -1,4 +1,7 @@
 <?php
+/*
+Classe di front-end logico. Riceve i dati in input (matricole, corso, data). Dispone di un metodo controlloMatricole() che verifica se tutte le matricole inserite esistono e appartengono al CdL selezionato. Contiene i metodi per avviare la generazione (generaProspetti()) e l'invio delle email (inviaProspetti())
+*/
 
 require_once "GeneratoreProspettiCommissione.php";
 require_once "GestoreEmail.php";

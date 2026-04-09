@@ -1,5 +1,8 @@
 <?php
-
+/*
+Classe deputata alla creazione materiale dei file PDF del prospetto da inviare al laureando. Utilizza la libreria esterna FPDF.
+Impagina i dati dello studente e utilizza la funzione eval() di PHP per calcolare matematicamente le simulazioni del voto di laurea (sostituendo variabili in una stringa formula come M*3+18+T+C).
+*/
 require_once __DIR__."/../lib/fpdf184/fpdf.php";
 require_once 'CarrieraLaureando.php';
 require_once 'CarrieraLaureandoInf.php';
@@ -14,7 +17,7 @@ class GeneratoreProspettiLaureandi
 
     public function __construct(string $matricola, string $cdl, string $dataLaurea)
     {
-        global $carriere; //array globale, usato in seguito per l'invio delle mail
+        global $carriere; // array globale, usato in seguito per l'invio delle mail
         $this->matricola = $matricola;
         $this->cdl = $cdl;
         $this->dataLaurea = $dataLaurea;
@@ -36,14 +39,14 @@ class GeneratoreProspettiLaureandi
 
     public function costruisciPdf(FPDF $pdf): void
     {
-        //flag usato per la gestione degli studenti di ingegneria informatica
+        // flag usato per la gestione degli studenti di ingegneria informatica
         $info = $this->cdl == "T. Ing. Informatica";
 
         $pdf->SetMargins(11, 8);
         $pdf->AddPage();
         $font = "Arial";
 
-        //stampa dei dati anagrafici
+        // stampa dei dati anagrafici
         $pdf->SetFont($font, "", 13);
         $pdf->Cell(0, 6, $this->cdl, 0, 1, "C");
         $pdf->Cell(0, 6, "CARRIERA E SIMULAZIONE DEL VOTO DI LAUREA", 0, 1, "C");
@@ -60,19 +63,19 @@ class GeneratoreProspettiLaureandi
         $pdf->Cell(0, 5.5, $this->carriera->email, 0, 1);
         $pdf->Cell(45, 5.5, "Data:", 0, 0);
         $pdf->Cell(0, 5.5, $this->dataLaurea, 0, 1);
-        //stampa del bonus
+        // stampa del bonus
         if ($info) {
             $pdf->Cell(45, 5.5, "Bonus:", 0, 0);
             $pdf->Cell(0, 5.5, $this->carriera->bonus ? "SI" : "NO", 0, 1);
         }
         $pdf->Ln(3);
 
-        //stampa della tabella degli esami
+        // stampa della tabella degli esami
         $pdf->Cell($pdf->GetPageWidth() - 22 - ($info ? 44 : 33), 5.5, "ESAME", 1, 0, "C");
         $pdf->Cell(11, 5.5, "CFU", 1, 0, "C");
         $pdf->Cell(11, 5.5, "VOT", 1, 0, "C");
         $pdf->Cell(11, 5.5, "MED", 1, 0, "C");
-        //aggiunta della colonna relativa agli esami informatici
+        // aggiunta della colonna relativa agli esami informatici
         if ($info) {
             $pdf->Cell(11, 5.5, "INF", 1, 0, "C");
         }
@@ -90,7 +93,7 @@ class GeneratoreProspettiLaureandi
         }
         $pdf->Ln(3);
 
-        //stampa dei dati di carriera
+        // stampa dei dati di carriera
         $pdf->SetFontSize(9);
         $pdf->Rect($pdf->GetX(), $pdf->GetY(), $pdf->GetPageWidth() - 22, $info ? 33 : 22);
         $pdf->Cell(80, 5.5, "Media Pesata (M):", 0, 0);
@@ -111,7 +114,7 @@ class GeneratoreProspettiLaureandi
         }
         $pdf->Cell(80, 5.5, "Formula calcolo voto di laurea:", 0, 0);
         $pdf->Cell(0, 5.5, FileConfigurazione::getFormulaVoto($this->cdl), 0, 1);
-        //stampa media degli esami informatici
+        // stampa media degli esami informatici
         if ($info) {
             $pdf->Cell(80, 5.5, "Media pesata esami INF:", 0, 0);
             $pdf->Cell(0, 5.5, round($this->carriera->mediaInformatica, 3), 0, 1);
@@ -124,7 +127,7 @@ class GeneratoreProspettiLaureandi
         $pdf->SetFontSize(9);
         $pdf->Cell(($pdf->GetPageWidth() - 22), 5.5, "SIMULAZIONE DI VOTO DI LAUREA", 1, 1, "C");
 
-        //gestione della formula
+        // gestione della formula
         $formulaVoto = FileConfigurazione::getFormulaVoto($this->cdl);
         $formulaVoto = str_replace('CFU', "A", $formulaVoto);
         $formulaVoto = str_replace(["M", 'T', 'A', 'C'], ['$M', '$T', '$A', '$C'], $formulaVoto);
@@ -136,7 +139,7 @@ class GeneratoreProspettiLaureandi
         $C = 0;
         $T = 0;
 
-        //simulazioni: meno di 10 celle
+        // simulazioni: meno di 10 celle
         if ($nCell <= 10) {
             $pdf->Cell(
                 ($pdf->GetPageWidth() - 22) / 2,
@@ -158,7 +161,7 @@ class GeneratoreProspettiLaureandi
                 $pdf->Cell(($pdf->GetPageWidth() - 22) / 2, 5.5, $i, 1, 0, "C");
                 $pdf->Cell(($pdf->GetPageWidth() - 22) / 2, 5.5, round($voto, 3), 1, 1, "C");
             }
-        } else { //simulazioni con oltre 10 celle
+        } else { // simulazioni con oltre 10 celle
             $pdf->Cell(
                 ($pdf->GetPageWidth() - 22) / 4,
                 5.5,
@@ -179,19 +182,19 @@ class GeneratoreProspettiLaureandi
             $pdf->Cell(($pdf->GetPageWidth() - 22) / 4, 5.5, "VOTO DI LAUREA", 1, 1, "C");
             $even = 0;
             for ($i = 0; $i < $nCell; $i++) {
-                //colonna sinistra
+                // colonna sinistra
                 if ($even == 0) {
                     $val = $param["min"] + $param["step"] * ($i / 2);
-                } //colonna destra, si aggiunge una costante
+                } // colonna destra, si aggiunge una costante
                 else {
                     $val = $param["min"] + $param["step"] * (ceil($nCell / 2) + ($i - 1) / 2);
-                } //ceil arrotonda in eccesso
+                } // ceil arrotonda in eccesso
                 if ($param["param"] == "T") {
                     $T = $val;
                 } else {
                     $C = $val;
                 }
-                eval("\$voto = $formulaVoto;"); //eval() esegue codice PHP: se formulaVoto fosse $T + 2 ==> $voto = $T + 2;
+                eval("\$voto = $formulaVoto;"); // eval() esegue codice PHP: se formulaVoto fosse $T + 2 ==> $voto = $T + 2;
                 $pdf->Cell(($pdf->GetPageWidth() - 22) / 4, 5.5, $val, 1, 0, "C");
                 $pdf->Cell(($pdf->GetPageWidth() - 22) / 4, 5.5, round($voto, 3), 1, $even || ($i == $nCell - 1), "C");
                 $even = $even == 0 ? 1 : 0;

@@ -1,5 +1,7 @@
 <?php
-
+/*
+Classe deputata alla creazione materiale dei file PDF del prospetto per la commissione. Utilizza la libreria esterna FPDF.
+*/
 require_once __DIR__."/../lib/fpdf184/fpdf.php";
 require_once 'GeneratoreProspettiLaureandi.php';
 
@@ -31,7 +33,7 @@ class GeneratoreProspettiCommissione
         $pdf->AddPage();
         $font = "Arial";
 
-        //generazione della tabella dei laureandi
+        // generazione della tabella dei laureandi
         $pdf->SetFont($font, "", 13);
         $pdf->Cell(0, 6, $this->cdl, 0, 1, "C");
         $pdf->Cell(0, 6, "LISTA LAUREANDI", 0, 1, "C");
@@ -51,12 +53,12 @@ class GeneratoreProspettiCommissione
             $pdf->Cell(($pdf->GetPageWidth() - 22) / 4, 6, "/110", 1, 1, "C");
         }
 
-        //aggiunta dei prospetti dei laureandi completi di simulazione
+        // aggiunta dei prospetti dei laureandi completi di simulazione
         foreach ($this->prospettiLaureandi as $prospetto) {
             $prospetto->costruisciPdf($pdf);
             $prospetto->aggiungiTabella($pdf);
         }
-        //la cartella del cdl è stata sicuramente già creata durante la generazione del prospetto del primo laureando
+        // la cartella del cdl è stata sicuramente già creata durante la generazione del prospetto del primo laureando
         $pdf->Output(__DIR__."/../prospetti/$this->cdl/commissione_prospetto.pdf", "F");
     }
 }
